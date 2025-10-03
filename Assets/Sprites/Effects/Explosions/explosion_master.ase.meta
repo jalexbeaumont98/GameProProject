@@ -8,6 +8,7 @@ ScriptedImporter:
   assetBundleName: 
   assetBundleVariant: 
   script: {fileID: 11500000, guid: 62a9f0aa5b59740cfbadc7e5f9823bb0, type: 3}
+  importerVersion: 2
   textureImporterSettings:
     alphaSource: 1
     mipMapMode: 0
@@ -304,13 +305,18 @@ ScriptedImporter:
   spriteSheetImportData: []
   asepriteLayers:
   - layerIndex: 0
-    guid: -446627172
+    uuid:
+      value0: 1502654476
+      value1: 0
+      value2: 0
+      value3: 0
+    guid: 1502654476
     name: explosion_master
     layerFlags: 0
     layerType: 0
     blendMode: 0
     cells:
-    - name: explosion_master_Frame_0
+    - name: Frame_0
       frameIndex: 0
       additiveSortOrder: 0
       cellRect:
@@ -319,7 +325,7 @@ ScriptedImporter:
         width: 2
         height: 2
       spriteId: 42018562244d9c640aff7001cfb65f66
-    - name: explosion_master_Frame_1
+    - name: Frame_1
       frameIndex: 1
       additiveSortOrder: 0
       cellRect:
@@ -328,7 +334,7 @@ ScriptedImporter:
         width: 10
         height: 12
       spriteId: 00b971155da3a2c46a9be2af9ca47e30
-    - name: explosion_master_Frame_2
+    - name: Frame_2
       frameIndex: 2
       additiveSortOrder: 0
       cellRect:
@@ -337,7 +343,7 @@ ScriptedImporter:
         width: 20
         height: 20
       spriteId: 3af435dd99a4a1842a20ac6d64c056b8
-    - name: explosion_master_Frame_3
+    - name: Frame_3
       frameIndex: 3
       additiveSortOrder: 0
       cellRect:
@@ -346,7 +352,7 @@ ScriptedImporter:
         width: 20
         height: 20
       spriteId: dbf1560dbec9c224fae4f45c690e8b06
-    - name: explosion_master_Frame_4
+    - name: Frame_4
       frameIndex: 4
       additiveSortOrder: 0
       cellRect:
@@ -355,7 +361,7 @@ ScriptedImporter:
         width: 20
         height: 20
       spriteId: d66947076a5a204408503d8ba1746d56
-    - name: explosion_master_Frame_5
+    - name: Frame_5
       frameIndex: 5
       additiveSortOrder: 0
       cellRect:
@@ -364,7 +370,7 @@ ScriptedImporter:
         width: 20
         height: 20
       spriteId: 5787e28fdb44d9b47a12371cd103a021
-    - name: explosion_master_Frame_6
+    - name: Frame_6
       frameIndex: 6
       additiveSortOrder: 0
       cellRect:
@@ -373,7 +379,7 @@ ScriptedImporter:
         width: 20
         height: 20
       spriteId: cf286a3124fae7f4ca0a9a4a43bc528a
-    - name: explosion_master_Frame_7
+    - name: Frame_7
       frameIndex: 7
       additiveSortOrder: 0
       cellRect:
@@ -382,7 +388,7 @@ ScriptedImporter:
         width: 20
         height: 20
       spriteId: 4721514a0aecec041a27aa1400835b2e
-    - name: explosion_master_Frame_8
+    - name: Frame_8
       frameIndex: 8
       additiveSortOrder: 0
       cellRect:
@@ -398,3 +404,4 @@ ScriptedImporter:
   secondarySpriteTextures: []
   spritePackingTag: 
   canvasSize: {x: 20, y: 20}
+  previousTextureSize: {x: 64, y: 128}
