@@ -8,6 +8,7 @@ ScriptedImporter:
   assetBundleName: 
   assetBundleVariant: 
   script: {fileID: 11500000, guid: 62a9f0aa5b59740cfbadc7e5f9823bb0, type: 3}
+  importerVersion: 2
   textureImporterSettings:
     alphaSource: 1
     mipMapMode: 0
@@ -130,8 +131,8 @@ ScriptedImporter:
       serializedVersion: 2
       x: 4
       y: 4
-      width: 256
-      height: 256
+      width: 510
+      height: 229
     spriteID: 98281228284c1014aa2df5f9786661c6
     spriteBone: []
     spriteOutline: []
@@ -144,7 +145,12 @@ ScriptedImporter:
   spriteSheetImportData: []
   asepriteLayers:
   - layerIndex: 0
-    guid: 914675215
+    uuid:
+      value0: 3042318603
+      value1: 0
+      value2: 0
+      value3: 0
+    guid: -1252648693
     name: terrain_tiles_mockup
     layerFlags: 0
     layerType: 0
@@ -156,8 +162,8 @@ ScriptedImporter:
       cellRect:
         x: 0
         y: 0
-        width: 256
-        height: 256
+        width: 510
+        height: 229
       spriteId: 98281228284c1014aa2df5f9786661c6
     linkedCells: []
     parentIndex: -1
@@ -165,4 +171,5 @@ ScriptedImporter:
   generatePhysicsShape: 0
   secondarySpriteTextures: []
   spritePackingTag: 
-  canvasSize: {x: 256, y: 256}
+  canvasSize: {x: 510, y: 256}
+  previousTextureSize: {x: 1024, y: 256}
