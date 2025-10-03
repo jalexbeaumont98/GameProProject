@@ -68,9 +68,12 @@
     <Compile Include="Assets\Scripts\Projectiles\Projectile.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerController.cs" />
     <Compile Include="Assets\Scripts\Player\TankTurretController.cs" />
+    <Compile Include="Assets\Scripts\Enemies\Enemy.cs" />
     <Compile Include="Assets\Scripts\Effects\Explosion\Explosion.cs" />
+    <Compile Include="Assets\Scripts\Effects\Parallax\ParallaxBackground.cs" />
     <Compile Include="Assets\Scripts\General\JiggleEffect.cs" />
     <Compile Include="Assets\Scripts\Player\ChassisController.cs" />
+    <Compile Include="Assets\Scripts\General\FollowMouse.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
