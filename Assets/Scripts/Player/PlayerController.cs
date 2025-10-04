@@ -11,6 +11,11 @@ public class PlayerController : MonoBehaviour
     [Header("References")]
     [SerializeField] private Rigidbody2D rb;
 
+    [Header("Attributes")]
+    [SerializeField] private int maxHealth;
+
+    private int currentHealth;
+
 
     [Header("Movement Settings")]
     [SerializeField] private float moveSpeed = 10f;
@@ -56,6 +61,11 @@ public class PlayerController : MonoBehaviour
 
 
     float horizontalMovement;
+
+    void Awake()
+    {
+        currentHealth = maxHealth;
+    }
 
     void Start()
     {
@@ -173,6 +183,23 @@ public class PlayerController : MonoBehaviour
             rb.gravityScale = baseGravity;
         }
 
+    }
+
+    public void TakeDamage(int amount)
+    {
+        currentHealth -= amount;
+
+        if (currentHealth <= 0) Die();
+    }
+
+    public void Stun()
+    {
+
+    }
+
+    private void Die()
+    {
+        print("player die :(");
     }
 
     private void OnDrawGizmosSelected()
