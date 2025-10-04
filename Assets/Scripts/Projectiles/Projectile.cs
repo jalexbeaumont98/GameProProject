@@ -3,38 +3,41 @@ using System.Collections.Generic;
 using Unity.Mathematics;
 using UnityEngine;
 
-public class Projectile : MonoBehaviour
+public abstract class Projectile : MonoBehaviour
 {
-    [SerializeField] private float speed = 10f;
-    [SerializeField] private float lifeTime = 3f;
-    [SerializeField] private float knockbackForce = 10f;
-    [SerializeField] private int maxBounces = 1;
-    [SerializeField] private int maxPiercing = 0;
-    [SerializeField] private GameObject explosion;
+    
+    [SerializeField] protected int damage = 1;
+    [SerializeField] protected float speed = 10f;
+    [SerializeField] protected float lifeTime = 3f;
+    [SerializeField] protected float knockbackForce = 10f;
+    [SerializeField] protected int maxBounces = 1;
+    [SerializeField] protected int maxPiercing = 0;
+    [SerializeField] protected GameObject explosion;
+    [SerializeField] protected int stun = 1;
     private Rigidbody2D rb;
 
-    private int bounces = 0;
-    private int pierces = 0;
+    protected int bounces = 0;
+    protected int pierces = 0;
 
-    void Awake()
+    protected virtual void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
     }
 
-    void Start()
+    protected virtual void Start()
     {
         // Launch in the direction the projectile is facing
         rb.velocity = transform.right * speed;
         // NOTE: use transform.up if you want "forward" to be the local Y instead
     }
 
-    void Update()
+    protected virtual void Update()
     {
         lifeTime -= Time.deltaTime;
         if (lifeTime < 0) DestroyProjectile();
     }
 
-    void LateUpdate()
+    protected virtual void LateUpdate()
     {
         if (rb.velocity.sqrMagnitude > 0.01f)
         {
@@ -43,29 +46,10 @@ public class Projectile : MonoBehaviour
         }
     }
 
-    void OnCollisionEnter2D(Collision2D collision)
+    protected virtual void OnCollisionEnter2D(Collision2D collision)
     {
-        // If we hit an enemy, apply knockback
-        if (collision.collider.CompareTag("Enemy"))
-        {
-            Rigidbody2D enemyRb = collision.collider.attachedRigidbody;
-            if (enemyRb != null)
-            {
-                // Direction from projectile to enemy
-                Vector2 hitDir = (collision.transform.position - transform.position).normalized;
-                enemyRb.AddForce(hitDir * knockbackForce, ForceMode2D.Impulse);
-            }
-
-            if (maxPiercing > pierces)
-            {
-                pierces++;
-                return;
-            }
-
-            // Destroy projectile after impact
-            DestroyProjectile();
-        }
-        else if (collision.collider.CompareTag("Ground"))
+        
+        if (collision.collider.CompareTag("Ground"))
         {
             if (maxBounces > bounces)
             {
@@ -77,13 +61,13 @@ public class Projectile : MonoBehaviour
         }
     }
 
-    public void SpawnExplosion()
+    protected virtual void SpawnExplosion()
     {
         if (explosion == null) return;
         Instantiate(explosion, transform.position, quaternion.identity);
     }
 
-    public void DestroyProjectile()
+    protected virtual void DestroyProjectile()
     {
         SpawnExplosion();
         Destroy(gameObject);
