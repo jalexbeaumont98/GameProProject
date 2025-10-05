@@ -1,8 +1,12 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.InteropServices.WindowsRuntime;
+using UnityEditor.Rendering.LookDev;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Rendering;
+using UnityEngine.UIElements.Experimental;
 
 public class PlayerController : MonoBehaviour
 {
@@ -26,6 +30,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float coyoteTime = 0.1f; // how long after leaving ground you can still jump
     //[SerializeField] private float jumpAnimTime = 0.2f;
 
+    float horizontalMovement;
     private float coyoteTimer = 0f;
     private bool wasGrounded = false;
 
@@ -50,21 +55,31 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private TracksController tracksController;
 
     [Header("Shooting")]
+    [SerializeField] private float fireRate = 3f; // shots per second (higher = faster)
     [SerializeField] private GameObject jumpExplosion;
     [SerializeField] private List<GameObject> projectiles;
-    int projectileIndex = 0;
+    [SerializeField] private GameObject RegularProjectile;
+    [SerializeField] private bool projectilesUnlocked = false;
+    private int projectileIndex = 0;
+    private float nextFireTime = 0f;
+
+    
 
 
 
     [Header("Debug Options")]
     [SerializeField] private bool showGroundGizmos = true;
 
+    //Events
+    public static event System.Action<float, float> OnPlayerHPChange;
+    public static event System.Action<int> OnRoundChange;
 
-    float horizontalMovement;
+
 
     void Awake()
     {
         currentHealth = maxHealth;
+        OnPlayerHPChange?.Invoke(currentHealth, maxHealth);
     }
 
     void Start()
@@ -124,15 +139,80 @@ public class PlayerController : MonoBehaviour
 
     }
 
+    public void ChangeRound(InputAction.CallbackContext context)
+    {
+
+        if (!projectilesUnlocked) return;
+
+        if (context.performed)
+        {
+            float value = context.ReadValue<float>();
+
+
+            projectileIndex += (int)value;
+
+            if (projectileIndex > projectiles.Count) projectileIndex = 0;
+
+            else if (projectileIndex < 0) projectileIndex = projectiles.Count;
+
+            OnRoundChange?.Invoke(projectileIndex);
+
+        }
+    }
+
     public void Fire(InputAction.CallbackContext context)
     {
         if (context.performed)
         {
             if (turretController.Shoot())
             {
-                turretController.SpawnProjectile(projectiles[projectileIndex]);
+                // Prevent shooting before next allowed time
+                if (Time.time < nextFireTime)
+                    return;
+
+                // Fire the weapon
+                Shoot();
+
+                // Set next fire time
+                nextFireTime = Time.time + 1f / fireRate;
+
             }
         }
+    }
+
+    public void AltFire(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            // todo ammo check
+
+            if (projectilesUnlocked)
+            {
+                if (turretController.Shoot())
+            {
+                // Prevent shooting before next allowed time
+                if (Time.time < nextFireTime)
+                    return;
+
+                // Fire the weapon
+                Shoot(projectileIndex);
+
+                // Set next fire time
+                nextFireTime = Time.time + 1f / fireRate;
+
+            }
+            }
+        }
+    }
+
+    private void Shoot(int index = -1)
+    {
+
+        if (index > 0) turretController.SpawnProjectile(RegularProjectile);
+        else turretController.SpawnProjectile(projectiles[projectileIndex]);
+
+
+
     }
 
     public void AnimateJump()
@@ -188,6 +268,8 @@ public class PlayerController : MonoBehaviour
     public void TakeDamage(int amount)
     {
         currentHealth -= amount;
+
+        OnPlayerHPChange?.Invoke(currentHealth, maxHealth);
 
         if (currentHealth <= 0) Die();
     }

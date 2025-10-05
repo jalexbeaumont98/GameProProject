@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 4929964596732963733}
   - component: {fileID: 4416418090873494514}
   - component: {fileID: 9204534856424193552}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Enemy_Proj
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -103,7 +103,7 @@ MonoBehaviour:
   speed: 12
   lifeTime: 3
   knockbackForce: 10
-  maxBounces: 1
+  maxBounces: 0
   maxPiercing: 0
   explosion: {fileID: 3076966231695200647, guid: 395153b5e400b904bb7b14bd2824b0a7, type: 3}
   stun: 1

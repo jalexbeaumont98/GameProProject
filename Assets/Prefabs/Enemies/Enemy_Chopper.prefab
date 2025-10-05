@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 677855036387507123}
   - component: {fileID: 479315636765257675}
   - component: {fileID: 2225267824242418790}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Gun
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -101,9 +101,13 @@ MonoBehaviour:
   player: {fileID: 0}
   projectile: {fileID: 2353291307094219273, guid: db8e4e26a0f96d24788efef5c77ab8db, type: 3}
   firePoint: {fileID: 5993688974921858656}
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 64
   rotationSpeed: 5
   range: 8
-  fireInterval: 1.5
+  fireRate: 1
+  checkRadius: 0.1
   debugMessages: 1
 --- !u!1 &2952025272544042717
 GameObject:
@@ -116,7 +120,7 @@ GameObject:
   - component: {fileID: 4332698209831069289}
   - component: {fileID: 7389182390720449606}
   - component: {fileID: 2439835467511899090}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -216,7 +220,7 @@ GameObject:
   - component: {fileID: 6370390131866841313}
   - component: {fileID: 2605525700775690307}
   - component: {fileID: 7994850388144610198}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Enemy_Chopper
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -300,9 +304,9 @@ CircleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.15360308, y: -0.17478979}
+  m_Offset: {x: -0.15608382, y: -0.18967408}
   serializedVersion: 2
-  m_Radius: 0.28813362
+  m_Radius: 0.3104598
 --- !u!114 &7994850388144610198
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -348,7 +352,7 @@ GameObject:
   - component: {fileID: 1773509353382218030}
   - component: {fileID: 3208012413744208409}
   - component: {fileID: 6524816358295591150}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Rotors
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -452,7 +456,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5993688974921858656}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: FirePoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
