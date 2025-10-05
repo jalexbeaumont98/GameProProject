@@ -1,0 +1,9 @@
+player firerate clamped
+player hp ui
+fixed enemy projectiles clipping into walls when too close to walls
+created layers and assigned them to gameobjects
+imported dotween package for future use
+shell switching plus ui skeleton put in place
+
+~~~
+

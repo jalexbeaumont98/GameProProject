@@ -8,6 +8,10 @@ public class GameState : MonoBehaviour
 
     public Transform player;
 
+    [SerializeField] private List<ShellData> shells;
+
+
+
     void Awake()
     {
         // Ensure only one instance exists
@@ -37,6 +41,11 @@ public class GameState : MonoBehaviour
 
         return player;
 
+    }
+
+    public List<ShellData> GetShellData()
+    {
+        return shells;
     }
 
     

@@ -8,12 +8,15 @@ public class EnemyTurret : MonoBehaviour
     [SerializeField] private Transform player;     // Assign your player transform
     [SerializeField] private GameObject projectile;
     [SerializeField] private Transform firePoint;
+    [SerializeField] private LayerMask groundLayer;   // assign in inspector
+
 
 
     [Header("Attributes")]
     [SerializeField] private float rotationSpeed = 5f; // How quickly it turns
     [SerializeField] private float range = 8f;
     [SerializeField] private float fireRate = 1f; // time between shots
+    [SerializeField] private float checkRadius = 0.1f; // small overlap radius
 
 
     [Header("Debug Settings")]
@@ -70,11 +73,22 @@ public class EnemyTurret : MonoBehaviour
 
     private void Shoot()
     {
+        if (!CanFire()) return;
         DebugMessage("Shoot!");
         Instantiate(projectile, firePoint.position, firePoint.rotation);
     }
 
+    public bool CanFire()
+    {
+        // Check if firePoint overlaps any collider on the ground layer
+        bool blocked = Physics2D.OverlapCircle(firePoint.position, checkRadius, groundLayer);
 
+        if (debugMessages)
+        Debug.DrawRay(firePoint.position, Vector2.up * 0.1f, blocked ? Color.red : Color.green, 0.1f);
+
+        // Return false if blocked, true if clear
+        return !blocked;
+    }
 
     public void DebugMessage(string message)
     {

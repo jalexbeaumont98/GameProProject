@@ -580,7 +580,7 @@ TextureImporter:
         width: 16
         height: 16
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -588,6 +588,27 @@ TextureImporter:
       bones: []
       spriteID: 0d79c86b83a82fc408913c72380dd7fe
       internalID: 1910778603
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: newtileset_23
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 208
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: dfcd3d301837156489f44baca9d3e9df
+      internalID: 97337210
       vertices: []
       indices: 
       edges: []
@@ -619,6 +640,7 @@ TextureImporter:
       newtileset_20: 2087633758
       newtileset_21: -663583579
       newtileset_22: 1910778603
+      newtileset_23: 97337210
       newtileset_3: 1837862725
       newtileset_4: 534835492
       newtileset_5: -911058491
