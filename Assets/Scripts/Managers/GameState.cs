@@ -8,8 +8,9 @@ public class GameState : MonoBehaviour
 
     public Transform player;
 
-    [SerializeField] private List<ShellData> shells;
+    [SerializeField] public List<ShellData> shells;
 
+    public IReadOnlyList<ShellData> Shells => shells;
 
 
     void Awake()
@@ -43,10 +44,7 @@ public class GameState : MonoBehaviour
 
     }
 
-    public List<ShellData> GetShellData()
-    {
-        return shells;
-    }
+    
 
     
 }
