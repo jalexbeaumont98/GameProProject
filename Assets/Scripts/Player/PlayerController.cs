@@ -1,12 +1,7 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Runtime.InteropServices.WindowsRuntime;
-using UnityEditor.Rendering.LookDev;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.Rendering;
-using UnityEngine.UIElements.Experimental;
+
 
 public class PlayerController : MonoBehaviour
 {
@@ -14,6 +9,7 @@ public class PlayerController : MonoBehaviour
 
     [Header("References")]
     [SerializeField] private Rigidbody2D rb;
+    [SerializeField] PlayerShellController shellCon;
 
     [Header("Attributes")]
     [SerializeField] private int maxHealth;
@@ -22,6 +18,7 @@ public class PlayerController : MonoBehaviour
 
 
     [Header("Movement Settings")]
+    [SerializeField] private GameObject jumpExplosion;
     [SerializeField] private float moveSpeed = 10f;
     [SerializeField] private float airSpeed = 5f;
     [SerializeField] float accelRate = 15f;   // how fast you accelerate
@@ -54,26 +51,11 @@ public class PlayerController : MonoBehaviour
     [Header("Tracks")]
     [SerializeField] private TracksController tracksController;
 
-    [Header("Shooting")]
-    [SerializeField] private float fireRate = 3f; // shots per second (higher = faster)
-    [SerializeField] private GameObject jumpExplosion;
-    [SerializeField] private List<GameObject> projectiles;
-    [SerializeField] private GameObject RegularProjectile;
-    [SerializeField] private bool projectilesUnlocked = false;
-    private int projectileIndex = 0;
-    private float nextFireTime = 0f;
-
-    
-
-
-
     [Header("Debug Options")]
     [SerializeField] private bool showGroundGizmos = true;
 
     //Events
-    public static event System.Action<float, float> OnPlayerHPChange;
-    public static event System.Action<int> OnRoundChange;
-
+    public static event Action<float, float> OnPlayerHPChange;
 
 
     void Awake()
@@ -142,21 +124,11 @@ public class PlayerController : MonoBehaviour
     public void ChangeRound(InputAction.CallbackContext context)
     {
 
-        if (!projectilesUnlocked) return;
-
         if (context.performed)
         {
             float value = context.ReadValue<float>();
 
-
-            projectileIndex += (int)value;
-
-            if (projectileIndex > projectiles.Count) projectileIndex = 0;
-
-            else if (projectileIndex < 0) projectileIndex = projectiles.Count;
-
-            OnRoundChange?.Invoke(projectileIndex);
-
+            turretController.SetAltShell(shellCon.ChangeRound((int)value));
         }
     }
 
@@ -164,19 +136,7 @@ public class PlayerController : MonoBehaviour
     {
         if (context.performed)
         {
-            if (turretController.Shoot())
-            {
-                // Prevent shooting before next allowed time
-                if (Time.time < nextFireTime)
-                    return;
-
-                // Fire the weapon
-                Shoot();
-
-                // Set next fire time
-                nextFireTime = Time.time + 1f / fireRate;
-
-            }
+            turretController.Shoot(false);
         }
     }
 
@@ -184,35 +144,9 @@ public class PlayerController : MonoBehaviour
     {
         if (context.performed)
         {
-            // todo ammo check
-
-            if (projectilesUnlocked)
-            {
-                if (turretController.Shoot())
-            {
-                // Prevent shooting before next allowed time
-                if (Time.time < nextFireTime)
-                    return;
-
-                // Fire the weapon
-                Shoot(projectileIndex);
-
-                // Set next fire time
-                nextFireTime = Time.time + 1f / fireRate;
-
-            }
-            }
+            turretController.Shoot(true);
+            
         }
-    }
-
-    private void Shoot(int index = -1)
-    {
-
-        if (index > 0) turretController.SpawnProjectile(RegularProjectile);
-        else turretController.SpawnProjectile(projectiles[projectileIndex]);
-
-
-
     }
 
     public void AnimateJump()
