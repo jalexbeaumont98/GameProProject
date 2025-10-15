@@ -3,17 +3,16 @@ using System.Collections.Generic;
 using Unity.Mathematics;
 using UnityEngine;
 
-public abstract class Projectile : MonoBehaviour
+public abstract class Projectile : DamageDealingController
 {
     
-    [SerializeField] protected int damage = 1;
+
     [SerializeField] protected float speed = 10f;
     [SerializeField] protected float lifeTime = 3f;
     [SerializeField] protected float knockbackForce = 10f;
     [SerializeField] protected int maxBounces = 1;
     [SerializeField] protected int maxPiercing = 0;
     [SerializeField] protected GameObject explosion;
-    [SerializeField] protected int stun = 1;
     private Rigidbody2D rb;
 
     protected int bounces = 0;

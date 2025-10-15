@@ -12,5 +12,6 @@ public class ShellData
     public int maxRounds;
     public int damage;
     public bool unlocked;
+    public float reloadTime;
     
 }
