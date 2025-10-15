@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using Unity.Mathematics;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class TankTurretController : MonoBehaviour
@@ -15,6 +14,8 @@ public class TankTurretController : MonoBehaviour
     [SerializeField] private Transform shootPoint;
     [SerializeField] private Sprite[] barrelSprites;
     [SerializeField] private Sprite jumpSprite;
+    [SerializeField] private Sprite leftDashSprite;
+    [SerializeField] private Sprite rightDashSprite;
     [SerializeField] private SpriteRenderer barrelSpriteRenderer;
 
     [Header("Shooting Attributes")]
@@ -22,12 +23,40 @@ public class TankTurretController : MonoBehaviour
     [SerializeField] private GameObject regularProjectile;
     [SerializeField] private ShellData altShell;
 
+    [Header("Explosions")]
+    [SerializeField] private GameObject jumpExplosion;
+
+    [Header("Shell References")]
+    [SerializeField] private int[] shellAmmos;
+    [SerializeField] private ShellData emptyShell;
+    [SerializeField] private bool projectilesUnlocked = false;
+
+    IReadOnlyList<ShellData> shells;
+    private int shellIndex = 0;
+
+    private int currentMaxShells;
+    private int maxDashShells;
+    private int currentDashShells;
+
+    private Coroutine activeReloadCo;
+    private Coroutine activeDashReloadCo;
+
+
+
 
 
     private bool lockTurret = false;
     private float nextFireTime = 0f;
 
     private Camera mainCam;
+
+
+    public static event System.Action OnFire;
+    public static event System.Action OnAltFire;  //bool is whether fire was alt or not
+
+    public static event System.Action<int, int> OnShellChange;
+    public static event System.Action OnReloadAlt;
+    public static event System.Action OnReloadDash;
 
     void Awake()
     {
@@ -38,6 +67,14 @@ public class TankTurretController : MonoBehaviour
     {
         barrelSpriteRenderer = barrelTransform.GetComponent<SpriteRenderer>();
 
+        shells = GameState.Instance.Shells;
+        shellAmmos = new int[shells.Count];
+        for (int i = 0; i < shells.Count; i++)
+        {
+            shellAmmos[i] = shells[i].maxRounds;
+        }
+        InitializeDashShell();
+        InitializeShell();
 
     }
 
@@ -79,26 +116,39 @@ public class TankTurretController : MonoBehaviour
     }
 
 
-    public void SetAltShell(ShellData shellData)
-    {
-        altShell = shellData;
-    }
     public bool Shoot(bool alt)
     {
         if (!CanShoot()) return false;
 
-        if (!alt) SpawnProjectile(regularProjectile, false);
+        if (!alt)
+        {
+            OnFire?.Invoke();
+            SpawnProjectile(regularProjectile, false);
+        }
         else
         {
-            if (altShell.shell != null)
-                SpawnProjectile(altShell.shell);
+            if (shells[shellIndex] != null)
+            {
+                if (!HasAltShells()) return false;
+                SubtractAltShell();
+                SpawnProjectile(shells[shellIndex].shell);
+                OnFire?.Invoke();
+                OnAltFire?.Invoke();
+
+                ReloadShells();
+            }
+
         }
         return true;
     }
 
-    public void SpawnProjectile(GameObject projectile, bool overwriteAngle = false)
+    public void FireDash()
     {
+        SpawnProjectile(jumpExplosion, true);
+    }
 
+    private void SpawnProjectile(GameObject projectile, bool overwriteAngle = false)
+    {
 
         quaternion angle = shootPoint.rotation;
         if (overwriteAngle) angle = quaternion.identity;
@@ -106,7 +156,7 @@ public class TankTurretController : MonoBehaviour
         Instantiate(projectile, shootPoint.position, angle);
     }
 
-    private bool CanShoot()
+    public bool CanShoot()
     {
 
         if (lockTurret) return false;
@@ -123,21 +173,197 @@ public class TankTurretController : MonoBehaviour
 
     public void PlayJumpAnim()
     {
-        StartCoroutine(PlayJump());
+        lockTurret = true;
+        AnimateJump();
+        StartCoroutine(LockJump());
     }
 
-    public IEnumerator PlayJump()
+    public void PlayDashAnim(int direction)
     {
-
-        bodyRenderer.sprite = jumpSprite;
-        barrelSpriteRenderer.sprite = barrelSprites[1];
-        barrelTransform.rotation = Quaternion.Euler(0, 0, -90);
         lockTurret = true;
+        AnimateDash(direction);
+        StartCoroutine(LockJump());
+    }
+
+    public IEnumerator LockJump()
+    {
 
         yield return new WaitForSeconds(0.33f);
 
         lockTurret = false;
 
+    }
+
+    private void AnimateJump()
+    {
+        bodyRenderer.sprite = jumpSprite;
+        barrelSpriteRenderer.sprite = barrelSprites[1];
+        barrelTransform.rotation = Quaternion.Euler(0, 0, -90);
+    }
+
+    private void AnimateDash(int direction)
+    {
+        if (direction < 0)
+        {
+            bodyRenderer.sprite = rightDashSprite;
+            barrelSpriteRenderer.sprite = barrelSprites[0];
+            barrelTransform.rotation = Quaternion.Euler(0, 0, 0);
+        }
+
+        else
+        {
+            bodyRenderer.sprite = leftDashSprite;
+            barrelSpriteRenderer.sprite = barrelSprites[0];
+            barrelTransform.rotation = Quaternion.Euler(0, 0, -180);
+        }
+    }
+
+    void InitializeDashShell()
+    {
+
+        currentDashShells = 0;
+
+        if (GameState.Instance.dashUnlocked)
+        {
+            print("dash shell init");
+            maxDashShells = GameState.Instance.maxDashes;
+            ReloadDashShells();
+        }
+
+        if (projectilesUnlocked)
+        {
+            shellIndex = -1;
+            ChangeRound(1);
+        }
+    }
+
+
+    void InitializeShell()
+    {
+        if (!projectilesUnlocked) return;
+
+        currentMaxShells = shells[shellIndex].maxRounds;
+
+        ShellChangeMessage();
+
+    }
+
+    public void ChangeRound(int direction)
+    {
+
+        if (!projectilesUnlocked)
+        {
+            ShellChangeMessage(true);
+            return; //return the empty shell
+        }
+
+        int attempts = 0;
+        int totalShells = shells.Count;
+
+        do
+        {
+            // Move index and wrap using modulo
+            shellIndex = (shellIndex + direction + totalShells) % totalShells;
+
+            attempts++;
+            if (attempts > totalShells)
+            {
+                Debug.LogWarning("No unlocked shells found — returning null shell.");
+                ShellChangeMessage(true);
+                return;
+            }
+
+        } while (!shells[shellIndex].unlocked);
+
+        ShellChangeMessage();
+        InitializeShell();
+
+    }
+
+    private void ShellChangeMessage(bool empty = false)
+    {
+        if (empty) OnShellChange?.Invoke(-1, 0);
+        else
+            OnShellChange?.Invoke(shellIndex, shellAmmos[shellIndex]);
+    }
+
+    public void SubtractAltShell()
+    {
+        shellAmmos[shellIndex]--;
+    }
+
+    public bool HasAltShells()
+    {
+        print("shells?: ");
+         print(shellAmmos[shellIndex] > 0);
+        return shellAmmos[shellIndex] > 0;
+    }
+
+    public bool HasDashShells()
+    {
+        if (currentDashShells > 0)
+        {
+            currentDashShells--;
+            return true;
+        }
+        return false;
+
+    }
+
+    public void ReloadShells()
+    {
+
+        if (shellAmmos[shellIndex] >= currentMaxShells) return;
+
+        if (activeReloadCo != null) return;
+
+        activeReloadCo = StartCoroutine(ReloadShellCoroutine(shells[shellIndex]));
+    }
+
+    public void ReloadDashShells()
+    {
+        if (currentDashShells >= maxDashShells) return;
+
+        if (activeDashReloadCo != null) return;
+
+        activeDashReloadCo = StartCoroutine(ReloadDashShellCoroutine());
+
+    }
+
+    private IEnumerator ReloadDashShellCoroutine()
+    {
+        yield return new WaitForSeconds(0.1f);
+
+        if (currentDashShells < maxDashShells)
+            currentDashShells++;
+
+        OnReloadDash?.Invoke();
+
+        activeDashReloadCo = null;
+
+        if (currentDashShells < maxDashShells)
+        {
+            ReloadDashShells();
+        }
+
+    }
+
+
+    private IEnumerator ReloadShellCoroutine(ShellData shell)
+    {
+        yield return new WaitForSeconds(shell.reloadTime);
+
+        if (shellAmmos[shellIndex] < currentMaxShells)
+            shellAmmos[shellIndex]++;
+
+
+        OnReloadAlt?.Invoke();
+        activeReloadCo = null;
+
+        if (shellAmmos[shellIndex] < currentMaxShells)
+        {
+            ReloadShells();
+        }
     }
 
 }

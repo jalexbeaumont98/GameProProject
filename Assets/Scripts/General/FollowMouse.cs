@@ -5,7 +5,7 @@ using UnityEngine;
 public class FollowMouse : MonoBehaviour
 {
     [SerializeField] private Transform player;
-    [SerializeField] private float maxDistance = 5f;
+
 
     private Camera mainCam;
 

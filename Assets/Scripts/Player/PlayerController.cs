@@ -1,4 +1,5 @@
 using System;
+using System.Net.Http.Headers;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -9,24 +10,23 @@ public class PlayerController : MonoBehaviour
 
     [Header("References")]
     [SerializeField] private Rigidbody2D rb;
-    [SerializeField] PlayerShellController shellCon;
+    //[SerializeField] PlayerShellController shellCon;
 
     [Header("Attributes")]
     [SerializeField] private int maxHealth;
 
-    private int currentHealth;
+    int currentHealth;
 
 
     [Header("Movement Settings")]
-    [SerializeField] private GameObject jumpExplosion;
     [SerializeField] private float moveSpeed = 10f;
     [SerializeField] private float airSpeed = 5f;
     [SerializeField] float accelRate = 15f;   // how fast you accelerate
     [SerializeField] float decelRate = 10f;   // how fast you slow down
     [SerializeField] private float jumpForce = 10f;
+    [SerializeField] private float dashForce = 10f;
     [SerializeField] private float coyoteTime = 0.1f; // how long after leaving ground you can still jump
     //[SerializeField] private float jumpAnimTime = 0.2f;
-
     float horizontalMovement;
     private float coyoteTimer = 0f;
     private bool wasGrounded = false;
@@ -56,7 +56,7 @@ public class PlayerController : MonoBehaviour
 
     //Events
     public static event Action<float, float> OnPlayerHPChange;
-
+    public static event System.Action OnDashFire;
 
     void Awake()
     {
@@ -98,29 +98,6 @@ public class PlayerController : MonoBehaviour
 
     }
 
-    public void Jump(InputAction.CallbackContext context)
-    {
-
-        if (GroundCheck())
-        {
-            if (context.performed)
-            {
-                rb.velocity += new Vector2(rb.velocity.x, jumpForce);
-                AnimateJump();
-            }
-
-            else if (context.canceled)
-            {
-                rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * 0.5f);
-            }
-
-            //todo add higher jump if held down + even higher jump if pressed right when landing
-
-
-        }
-
-    }
-
     public void ChangeRound(InputAction.CallbackContext context)
     {
 
@@ -128,7 +105,11 @@ public class PlayerController : MonoBehaviour
         {
             float value = context.ReadValue<float>();
 
-            turretController.SetAltShell(shellCon.ChangeRound((int)value));
+            print(value);
+            if (value > 0) value = 1;
+            else value = -1;
+
+            turretController.ChangeRound((int)value);
         }
     }
 
@@ -145,16 +126,91 @@ public class PlayerController : MonoBehaviour
         if (context.performed)
         {
             turretController.Shoot(true);
-            
+
         }
+    }
+
+    public void Jump(InputAction.CallbackContext context)
+    {
+
+        if (context.performed)
+        {
+            if (GroundCheck())
+            {
+                rb.velocity += new Vector2(rb.velocity.x, jumpForce);
+                //rb.velocity = new Vector2(rb.velocity.x, jumpForce);
+                AnimateJump();
+            }
+
+            else if (turretController.HasDashShells())
+            {
+                rb.velocity += new Vector2(rb.velocity.x, jumpForce);
+                //rb.velocity = new Vector2(rb.velocity.x, jumpForce);
+                OnDashFire?.Invoke();
+                AnimateJump();
+            }
+        }
+
+        else if (context.canceled)
+        {
+            rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * 0.5f);
+        }
+
+    }
+
+    public void Dash(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+
+            if (horizontalMovement == 0) return;
+
+            if (GroundCheck()) return;
+
+            if (!turretController.HasDashShells()) return; //from this point on dash must happen because dash ammo has been subtracted.
+
+            float value = horizontalMovement;
+
+            if (value > 0)
+            {
+                rb.velocity = new Vector2(rb.velocity.x + dashForce, rb.velocity.y);
+                //rb.velocity = new Vector2(dashForce, rb.velocity.y);
+
+            }
+
+            else
+            {
+                rb.velocity = new Vector2(rb.velocity.x - dashForce, rb.velocity.y);
+                //rb.velocity = new Vector2(-dashForce, rb.velocity.y);
+                //AnimateJump();
+            }
+            OnDashFire?.Invoke();
+            print(value);
+            AnimateDash((int)value);
+
+        }
+
     }
 
     public void AnimateJump()
     {
+
         chassisController.PlayJumpAnim(); //AnimateChassis
         turretController.PlayJumpAnim(); //AnimateTurret
                                          //SpawnMuzzleFlash
-        turretController.SpawnProjectile(jumpExplosion, true); //SpawnExplosion
+        turretController.FireDash(); //SpawnExplosion
+    }
+
+    public void AnimateDash(int direction)
+    {
+        turretController.PlayDashAnim(direction); //AnimateTurret
+                                                  //SpawnMuzzleFlash
+        turretController.FireDash(); //SpawnExplosion
+    }
+
+    private void ResetDashes()
+    {
+        turretController.ReloadDashShells();
     }
 
     public bool GroundCheck()
@@ -170,6 +226,11 @@ public class PlayerController : MonoBehaviour
         {
             // Reset timer whenever you touch the ground
             coyoteTimer = coyoteTime;
+
+            if (!wasGrounded)
+            {
+                ResetDashes();
+            }
         }
         else
         {

@@ -37,7 +37,7 @@ public class EnemyTurret : MonoBehaviour
 
         float angle = 0;
         float distanceToPlayer = Vector2.Distance(transform.position, player.position);
-        // Decide whether to follow the player or wander
+
         if (distanceToPlayer > range)
         {
             angle = 180f;
@@ -65,7 +65,7 @@ public class EnemyTurret : MonoBehaviour
 
 
         // Create the target rotation
-        Quaternion targetRotation = Quaternion.Euler(new Vector3(0, 0, angle));
+        Quaternion targetRotation = Quaternion.Euler(new Vector3(0, 0, Mathf.Clamp(angle, -180, 0)));
 
         // Smoothly rotate toward the target
         transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
