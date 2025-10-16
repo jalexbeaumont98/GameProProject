@@ -13,6 +13,8 @@ public abstract class Projectile : DamageDealingController
     [SerializeField] protected int maxBounces = 1;
     [SerializeField] protected int maxPiercing = 0;
     [SerializeField] protected GameObject explosion;
+    [SerializeField] private LayerMask bounceLayers;
+
     private Rigidbody2D rb;
 
     protected int bounces = 0;
@@ -48,7 +50,7 @@ public abstract class Projectile : DamageDealingController
     protected virtual void OnCollisionEnter2D(Collision2D collision)
     {
         
-        if (collision.collider.CompareTag("Ground"))
+        if (((1 << collision.gameObject.layer) & bounceLayers) != 0)
         {
             if (maxBounces > bounces)
             {

@@ -20,6 +20,8 @@ public class GameState : MonoBehaviour
 
     public int maxDashes = 2;
 
+   
+
 
     void Awake()
     {
@@ -32,6 +34,11 @@ public class GameState : MonoBehaviour
 
         Instance = this;
         DontDestroyOnLoad(gameObject); // optional, keeps it across scenes
+    }
+
+    void Start()
+    {
+        
     }
 
 
@@ -50,6 +57,25 @@ public class GameState : MonoBehaviour
 
         return player;
 
+    }
+
+    public void OnPowerup(int powerupType)
+    {
+        print("Powerup achieved!");
+
+        if (powerupType == 0)
+        {
+            player.GetComponentInChildren<TankTurretController>().SetDashUnlocked();
+        }
+
+        if (powerupType == 1)
+        {
+            shells[0].unlocked = true;
+            TankTurretController tc = player.GetComponentInChildren<TankTurretController>();
+
+            tc.SetProjectilesUnlocked(0);
+            
+        }
     }
 
     

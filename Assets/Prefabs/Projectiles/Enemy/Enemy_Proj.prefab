@@ -100,13 +100,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 1
+  stun: 1
   speed: 12
   lifeTime: 3
   knockbackForce: 10
   maxBounces: 0
   maxPiercing: 0
   explosion: {fileID: 3076966231695200647, guid: 395153b5e400b904bb7b14bd2824b0a7, type: 3}
-  stun: 1
+  bounceLayers:
+    serializedVersion: 2
+    m_Bits: 64
 --- !u!50 &4416418090873494514
 Rigidbody2D:
   serializedVersion: 4

@@ -57,7 +57,7 @@ public class PlayerShellUI : MonoBehaviour
 
     private void UpdateShellUI(int index, int currentAmmo)
     {
-        print("You're attempting to change the equipped shell!");
+        //print("You're attempting to change the equipped shell!");
         
         ShellData currentShell;
         if (index >= 0) currentShell = shells[index];
@@ -74,7 +74,7 @@ public class PlayerShellUI : MonoBehaviour
     private void InitializeAltShellAmmo(int currentAmmo)
     {
 
-        print("current ammo: " + currentAmmo);
+        //print("current ammo: " + currentAmmo);
         if (altShells != null && altShells.Count > 0)
         {
             foreach (Shell_Indicator_Controller ammo in altShells)

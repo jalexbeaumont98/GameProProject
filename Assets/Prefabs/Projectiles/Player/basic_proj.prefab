@@ -162,10 +162,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 1
+  stun: 1
   speed: 14
   lifeTime: 3
   knockbackForce: 10
   maxBounces: 1
   maxPiercing: 0
   explosion: {fileID: 3584494987071072200, guid: 52023b4eece1a2a40a62bf2dcbceb399, type: 3}
-  stun: 1
+  bounceLayers:
+    serializedVersion: 2
+    m_Bits: 64
