@@ -30,6 +30,7 @@ public class TankTurretController : MonoBehaviour
     [SerializeField] private int[] shellAmmos;
     [SerializeField] private ShellData emptyShell;
     [SerializeField] private bool projectilesUnlocked = false;
+    [SerializeField] private bool dashUnlocked = false;
 
     IReadOnlyList<ShellData> shells;
     private int shellIndex = 0;
@@ -218,8 +219,23 @@ public class TankTurretController : MonoBehaviour
         }
     }
 
+    public void SetDashUnlocked()
+    {
+        dashUnlocked = true;
+        InitializeDashShell();
+    }
+
+    public void SetProjectilesUnlocked(int unlockedShell = 0)
+    {
+        projectilesUnlocked = true;
+        shellIndex = unlockedShell;
+        InitializeShell();
+    }
+
     void InitializeDashShell()
     {
+
+        if (!dashUnlocked) return;
 
         currentDashShells = 0;
 
@@ -294,13 +310,15 @@ public class TankTurretController : MonoBehaviour
 
     public bool HasAltShells()
     {
-        print("shells?: ");
-         print(shellAmmos[shellIndex] > 0);
+        if (!projectilesUnlocked) return false;
         return shellAmmos[shellIndex] > 0;
     }
 
     public bool HasDashShells()
     {
+
+        if (!dashUnlocked) return false;
+
         if (currentDashShells > 0)
         {
             currentDashShells--;
