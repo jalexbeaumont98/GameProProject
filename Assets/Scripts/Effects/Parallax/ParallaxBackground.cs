@@ -4,31 +4,62 @@ using UnityEngine;
 
 public class ParallaxBackground : MonoBehaviour
 {
-    [SerializeField] float speedX = 5;
+    [SerializeField] float parallaxSpeedX = 5;
+    [SerializeField] private float parallaxSpeedY = 0.5f;
 
-    Transform cameraTransform;
+    private Vector3 startPosition;
+    private Vector3 targetStartPosition;
+
+    public float spriteWidth;
+
+    [SerializeField] Transform target;
 
     float startPositionX;
-    public float spriteWidth;
 
     void Start()
     {
-        cameraTransform = Camera.main.transform;
+        //target = Camera.main.transform;
+        target = GameObject.FindWithTag("Player").transform;
+        startPosition = transform.position;
+        targetStartPosition = target.position;
 
-        startPositionX = transform.position.x;
-
-        spriteWidth = GetComponent<SpriteRenderer>().sprite.bounds.size.x;
-        speedX = speedX / 20;
+        // Get sprite width in world units
+        SpriteRenderer sr = GetComponent<SpriteRenderer>();
+        if (sr != null)
+            spriteWidth = sr.bounds.size.x;
+        else
+            Debug.LogWarning("No SpriteRenderer found! Infinite parallax will not work.");
     }
+
+    private void LateUpdate()
+    {
+        Vector3 delta = target.position - targetStartPosition;
+
+        // Move layer based on parallax speed
+        float newX = startPosition.x + delta.x * parallaxSpeedX;
+        float newY = startPosition.y + delta.y * parallaxSpeedY;
+
+        transform.position = new Vector3(newX, newY, startPosition.z);
+
+        // If the camera has moved far enough, reposition behind sibling for seamless looping
+        if (Mathf.Abs(target.position.x - transform.position.x) >= spriteWidth)
+        {
+            float offset = (target.position.x > transform.position.x) ? spriteWidth * 2f : -spriteWidth * 2f;
+            startPosition.x += offset;
+            transform.position = new Vector3(startPosition.x, transform.position.y, transform.position.z);
+        }
+    }
+
+    /*
 
     void Update()
     {
-        float relativeDistanceX = cameraTransform.position.x * -speedX;
+        float relativeDistanceX = target.position.x * -parallaxSpeedX;
 
         transform.position = new Vector3(startPositionX + relativeDistanceX, transform.position.y, 0);
 
         float relativeCameraPositionX =
-                cameraTransform.position.x - relativeDistanceX;
+                target.position.x - relativeDistanceX;
 
         if (relativeCameraPositionX > startPositionX + spriteWidth)
         {
@@ -40,4 +71,5 @@ public class ParallaxBackground : MonoBehaviour
         }
 
     }
+    */
 }

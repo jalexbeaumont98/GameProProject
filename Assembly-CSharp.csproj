@@ -79,8 +79,10 @@
     <Compile Include="Assets\Scripts\UI\Shell_Indicator_Controller.cs" />
     <Compile Include="Assets\Scripts\General\Powerup.cs" />
     <Compile Include="Assets\Scripts\Managers\GameState.cs" />
+    <Compile Include="Assets\Scripts\Enemies\EnemyJeep.cs" />
     <Compile Include="Assets\Scripts\Effects\Explosion\Explosion.cs" />
     <Compile Include="Assets\Scripts\UI\PlayerHealthBar.cs" />
+    <Compile Include="Assets\Scripts\Enemies\RBKick.cs" />
     <Compile Include="Assets\Scripts\Effects\Parallax\ParallaxBackground.cs" />
     <Compile Include="Assets\Scripts\Effects\JiggleEffect.cs" />
     <Compile Include="Assets\Scripts\Effects\CustomParticle.cs" />

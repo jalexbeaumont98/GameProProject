@@ -269,7 +269,7 @@ public class TankTurretController : MonoBehaviour
 
         if (!projectilesUnlocked)
         {
-            ShellChangeMessage(true);
+            //ShellChangeMessage(true);
             return; //return the empty shell
         }
 
