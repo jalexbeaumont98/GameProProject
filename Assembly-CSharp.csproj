@@ -65,6 +65,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Scripts\Player\TracksController.cs" />
+    <Compile Include="Assets\Scripts\Managers\AudioManager.cs" />
     <Compile Include="Assets\Scripts\Projectiles\Projectile.cs" />
     <Compile Include="Assets\Scripts\Managers\TileMapManager.cs" />
     <Compile Include="Assets\Scripts\Effects\Explosion\HE_Explosion.cs" />
@@ -74,6 +75,7 @@
     <Compile Include="Assets\Scripts\Projectiles\EnemyProjectile.cs" />
     <Compile Include="Assets\Scripts\Effects\ParticleSpawner.cs" />
     <Compile Include="Assets\Scripts\Player\TankTurretController.cs" />
+    <Compile Include="Assets\Audio\SoundData.cs" />
     <Compile Include="Assets\Scripts\Enemies\Enemy.cs" />
     <Compile Include="Assets\Scripts\Enemies\EnemyTurret.cs" />
     <Compile Include="Assets\Scripts\UI\Shell_Indicator_Controller.cs" />
@@ -85,10 +87,13 @@
     <Compile Include="Assets\Scripts\Enemies\RBKick.cs" />
     <Compile Include="Assets\Scripts\Effects\Parallax\ParallaxBackground.cs" />
     <Compile Include="Assets\Scripts\Effects\JiggleEffect.cs" />
+    <Compile Include="Assets\Scripts\General\PauseManager.cs" />
+    <Compile Include="Assets\Scripts\General\NextLevelTrigger.cs" />
     <Compile Include="Assets\Scripts\Effects\CustomParticle.cs" />
     <Compile Include="Assets\Scripts\Projectiles\PlayerProjectile.cs" />
     <Compile Include="Assets\Scripts\Effects\Explosion\ProxExplosion.cs" />
     <Compile Include="Assets\Scripts\Effects\DestroySelf.cs" />
+    <Compile Include="Assets\Scripts\Managers\MainMenuManager.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerShellController.cs" />
     <Compile Include="Assets\Scripts\General\DamageDealingController.cs" />
     <Compile Include="Assets\Scripts\Player\ChassisController.cs" />

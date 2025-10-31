@@ -140,6 +140,7 @@ public class PlayerController : MonoBehaviour
                 rb.velocity += new Vector2(rb.velocity.x, jumpForce);
                 //rb.velocity = new Vector2(rb.velocity.x, jumpForce);
                 AnimateJump();
+                AudioManager.Instance.PlaySFX("jump");
             }
 
             else if (turretController.HasDashShells())
@@ -148,6 +149,7 @@ public class PlayerController : MonoBehaviour
                 //rb.velocity = new Vector2(rb.velocity.x, jumpForce);
                 OnDashFire?.Invoke();
                 AnimateJump();
+                AudioManager.Instance.PlaySFX("jump");
             }
         }
 
