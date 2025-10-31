@@ -11,8 +11,9 @@ public class Powerup : MonoBehaviour
         if (collision.CompareTag("Player"))
         {
             GameState.Instance.OnPowerup(powerupType);
+            Destroy(gameObject);
         }
 
-        Destroy(gameObject);
+        
     }
 }

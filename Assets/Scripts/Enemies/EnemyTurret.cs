@@ -17,6 +17,7 @@ public class EnemyTurret : MonoBehaviour
     [SerializeField] private float range = 8f;
     [SerializeField] private float fireRate = 1f; // time between shots
     [SerializeField] private float checkRadius = 0.1f; // small overlap radius
+    [SerializeField] private bool angleRestricted = true;
 
 
     [Header("Debug Settings")]

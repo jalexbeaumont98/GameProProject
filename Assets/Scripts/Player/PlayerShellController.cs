@@ -82,7 +82,7 @@ public class PlayerShellController : MonoBehaviour
 
         if (!projectilesUnlocked)
         {
-            ShellChangeMessage(true);
+            //ShellChangeMessage(true);
             return emptyShell; //return the empty shell
         }
 
