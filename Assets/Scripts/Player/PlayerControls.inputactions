@@ -364,7 +364,7 @@
                     "name": "Submit",
                     "type": "Button",
                     "id": "a53e6e05-975d-4313-8945-c130b7d30acc",
-                    "expectedControlType": "Button",
+                    "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
@@ -373,7 +373,7 @@
                     "name": "Cancel",
                     "type": "Button",
                     "id": "3244f0b2-a059-460e-b7bb-cb0d9e9cd5c7",
-                    "expectedControlType": "Button",
+                    "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
@@ -858,6 +858,34 @@
                     "processors": "",
                     "groups": "XR",
                     "action": "TrackedDeviceOrientation",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        },
+        {
+            "name": "Global",
+            "id": "e0aef21b-5f8f-444b-87cc-f054367f8fc6",
+            "actions": [
+                {
+                    "name": "Pause",
+                    "type": "Button",
+                    "id": "ab700017-a69f-4f9c-863b-5234669bf379",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "dc8f11b8-dad8-4eac-b1ed-46e82a829c4f",
+                    "path": "<Keyboard>/escape",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Pause",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

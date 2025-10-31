@@ -22,6 +22,8 @@ public class Explosion : DamageDealingController
         // Destroy after the current animation’s length
         //float animLength = animator.GetCurrentAnimatorStateInfo(0).length;
         //Destroy(gameObject, animLength);
+
+        AudioManager.Instance.PlaySFX("explosion_basic");
     }
 
     protected virtual void OnCollisionEnter2D(Collision2D collision)

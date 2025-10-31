@@ -1,0 +1,77 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &3234537571010734728
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8588967365024007957}
+  - component: {fileID: 6696586058209904437}
+  - component: {fileID: 5879745955456740738}
+  m_Layer: 0
+  m_Name: GameState
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8588967365024007957
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3234537571010734728}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -23.53055, y: 6.830978, z: -0.06561847}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6696586058209904437
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3234537571010734728}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a21b4cd6439ccba47a1fe1897d0af22a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 0}
+  shells:
+  - shell: {fileID: 4100909476818202124, guid: cdf4e399c12203b4e89eec9669be21c0, type: 3}
+    shellImage: {fileID: 21300000, guid: de4f7f1691fc8414f9eb7f05f95ab334, type: 3}
+    name: HE SHELL
+    maxRounds: 5
+    damage: 3
+    unlocked: 0
+    reloadTime: 1.2
+  - shell: {fileID: 8871098829643833529, guid: bafecac11d179f14c923a9d98c695b7a, type: 3}
+    shellImage: {fileID: 21300000, guid: c4b1ae7361fe2254f97d0c8ff5afa8bd, type: 3}
+    name: AP SHELL
+    maxRounds: 5
+    damage: 2
+    unlocked: 0
+    reloadTime: 1
+  dashUnlocked: 1
+  maxDashes: 2
+--- !u!114 &5879745955456740738
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3234537571010734728}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b02b08ad28b7700488bada3ae8a16130, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

@@ -155,6 +155,7 @@ public class TankTurretController : MonoBehaviour
         if (overwriteAngle) angle = quaternion.identity;
 
         Instantiate(projectile, shootPoint.position, angle);
+        AudioManager.Instance.PlaySFX("shoot");
     }
 
     public bool CanShoot()
