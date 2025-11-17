@@ -266,6 +266,8 @@ public class PlayerController : MonoBehaviour
     {
         currentHealth -= amount;
 
+        if (currentHealth > maxHealth) currentHealth = maxHealth;
+
         OnPlayerHPChange?.Invoke(currentHealth, maxHealth);
 
         if (currentHealth <= 0) Die();

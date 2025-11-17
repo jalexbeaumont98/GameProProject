@@ -87,17 +87,20 @@
     <Compile Include="Assets\Scripts\Enemies\RBKick.cs" />
     <Compile Include="Assets\Scripts\Effects\Parallax\ParallaxBackground.cs" />
     <Compile Include="Assets\Scripts\Effects\JiggleEffect.cs" />
+    <Compile Include="Assets\Scripts\UI\SignUIManager.cs" />
     <Compile Include="Assets\Scripts\General\PauseManager.cs" />
     <Compile Include="Assets\Scripts\General\NextLevelTrigger.cs" />
     <Compile Include="Assets\Scripts\Effects\CustomParticle.cs" />
     <Compile Include="Assets\Scripts\Projectiles\PlayerProjectile.cs" />
     <Compile Include="Assets\Scripts\Effects\Explosion\ProxExplosion.cs" />
     <Compile Include="Assets\Scripts\Effects\DestroySelf.cs" />
+    <Compile Include="Assets\Scripts\General\SignController.cs" />
     <Compile Include="Assets\Scripts\Managers\MainMenuManager.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerShellController.cs" />
     <Compile Include="Assets\Scripts\General\DamageDealingController.cs" />
     <Compile Include="Assets\Scripts\Player\ChassisController.cs" />
     <Compile Include="Assets\Scripts\UI\PlayerShellUI.cs" />
+    <Compile Include="Assets\Scripts\General\Healthpack.cs" />
     <Compile Include="Assets\Scripts\General\FollowMouse.cs" />
   </ItemGroup>
   <ItemGroup>
