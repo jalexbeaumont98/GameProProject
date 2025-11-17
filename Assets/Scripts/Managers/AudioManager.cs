@@ -10,6 +10,8 @@ public class AudioManager : MonoBehaviour
     [SerializeField] private List<SoundData> sounds = new List<SoundData>();
 
     [Header("Startup Music")]
+
+    [SerializeField] private bool playMusicOnStartup = false;
     [SerializeField] private string startupMusicId = ""; // set to valid ID to auto-play
     [SerializeField] private float musicFadeInSeconds = 0f;
 
@@ -50,7 +52,7 @@ public class AudioManager : MonoBehaviour
 
     private void Start()
     {
-        if (startupMusicId != "")
+        if (startupMusicId != "" && playMusicOnStartup)
         {
             PlayMusic(startupMusicId, fadeInSeconds: musicFadeInSeconds);
         }
