@@ -17,7 +17,7 @@ public class PlayerProjectile : Projectile
             Enemy enemy = collision.gameObject.GetComponent<Enemy>();
 
             if (enemy != null)
-            {
+            { 
                 enemy.TakeDamage(damage);
 
                 if (stun > 0)
@@ -44,4 +44,6 @@ public class PlayerProjectile : Projectile
             DestroyProjectile();
         }
     }
+
+    
 }

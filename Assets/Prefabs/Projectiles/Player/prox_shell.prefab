@@ -162,7 +162,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 1
-  stun: 1
+  stun: 0
   speed: 14
   lifeTime: 0.03
   knockbackForce: 10
@@ -172,3 +172,6 @@ MonoBehaviour:
   bounceLayers:
     serializedVersion: 2
     m_Bits: 64
+  explodeLayers:
+    serializedVersion: 2
+    m_Bits: 0

@@ -102,7 +102,7 @@ MonoBehaviour:
   damage: 1
   stun: 1
   speed: 12
-  lifeTime: 3
+  lifeTime: 6
   knockbackForce: 10
   maxBounces: 0
   maxPiercing: 0
@@ -125,7 +125,7 @@ Rigidbody2D:
   m_Mass: 0.1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 1
+  m_GravityScale: 0.7
   m_Material: {fileID: 6200000, guid: d1ff98feb85717f46a1e4f634c92a541, type: 2}
   m_IncludeLayers:
     serializedVersion: 2

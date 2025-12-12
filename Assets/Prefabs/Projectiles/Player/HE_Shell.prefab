@@ -172,3 +172,6 @@ MonoBehaviour:
   bounceLayers:
     serializedVersion: 2
     m_Bits: 64
+  explodeLayers:
+    serializedVersion: 2
+    m_Bits: 8192

@@ -108,6 +108,7 @@ MonoBehaviour:
   range: 8
   fireRate: 1
   checkRadius: 0.1
+  angleRestricted: 1
   debugMessages: 1
 --- !u!1 &2952025272544042717
 GameObject:
@@ -324,7 +325,7 @@ MonoBehaviour:
   sr: {fileID: 0}
   deathExplosion: {fileID: 3584494987071072200, guid: 52023b4eece1a2a40a62bf2dcbceb399, type: 3}
   moveSpeed: 3
-  maxHealth: 3
+  maxHealth: 2
   currentHealth: 0
   isStunnable: 1
   stunTime: 0.5

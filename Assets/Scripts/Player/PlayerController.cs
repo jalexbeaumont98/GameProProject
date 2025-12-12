@@ -27,6 +27,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float dashForce = 10f;
     [SerializeField] private float coyoteTime = 0.1f; // how long after leaving ground you can still jump
     //[SerializeField] private float jumpAnimTime = 0.2f;
+    [SerializeField] private bool isSprinting = false;
+    [SerializeField] private float sprintSpeed = 5f;
+
     float horizontalMovement;
     private float coyoteTimer = 0f;
     private bool wasGrounded = false;
@@ -41,6 +44,10 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float baseGravity = 2;
     [SerializeField] private float fallSpeedMultiplier = 2f;
     [SerializeField] private float maxFallSpeed = 18f;
+
+    [Header("Powerups")]
+    [SerializeField] private bool hover;
+
 
     [Header("Turret")]
     [SerializeField] private TankTurretController turretController;
@@ -69,11 +76,19 @@ public class PlayerController : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
     }
 
+    
+
     void Update()
     {
         if (GroundCheck())
         {
-            rb.velocity = new Vector2(horizontalMovement * moveSpeed, rb.velocity.y);
+
+            float speed;
+
+            if (isSprinting) speed = moveSpeed + sprintSpeed;
+            else speed = moveSpeed;
+
+            rb.velocity = new Vector2(horizontalMovement * speed, rb.velocity.y);
         }
 
         else
@@ -137,6 +152,8 @@ public class PlayerController : MonoBehaviour
         {
             if (GroundCheck())
             {
+                if (rb.velocity.y < 0)
+                    rb.velocity = new Vector2(rb.velocity.x, 0f);
                 rb.velocity += new Vector2(rb.velocity.x, jumpForce);
                 //rb.velocity = new Vector2(rb.velocity.x, jumpForce);
                 AnimateJump();
@@ -145,6 +162,8 @@ public class PlayerController : MonoBehaviour
 
             else if (turretController.HasDashShells())
             {
+                if (rb.velocity.y < 0)
+                    rb.velocity = new Vector2(rb.velocity.x, 0f);
                 rb.velocity += new Vector2(rb.velocity.x, jumpForce);
                 //rb.velocity = new Vector2(rb.velocity.x, jumpForce);
                 OnDashFire?.Invoke();
@@ -167,7 +186,12 @@ public class PlayerController : MonoBehaviour
 
             if (horizontalMovement == 0) return;
 
-            if (GroundCheck()) return;
+            if (GroundCheck())
+            {
+                isSprinting = true;
+
+                return;
+            } 
 
             if (!turretController.HasDashShells()) return; //from this point on dash must happen because dash ammo has been subtracted.
 
@@ -190,6 +214,11 @@ public class PlayerController : MonoBehaviour
             print(value);
             AnimateDash((int)value);
 
+        }
+
+        if (context.canceled)
+        {
+            isSprinting = false;
         }
 
     }
@@ -238,6 +267,7 @@ public class PlayerController : MonoBehaviour
         {
             // Count down if not grounded
             coyoteTimer -= Time.deltaTime;
+            
         }
 
         // Store for reference (not strictly needed, but useful if you want transitions)
@@ -281,6 +311,18 @@ public class PlayerController : MonoBehaviour
     private void Die()
     {
         print("player die :(");
+        GameState.Instance.PlayerDeath();
+    }
+
+    public void SetPowerUpsUnlocked(int index)
+    {
+        if (index == 0)
+        {
+            print("Setting dash unlocked");
+            turretController.SetDashUnlocked();
+        }
+
+        //else if
     }
 
     private void OnDrawGizmosSelected()

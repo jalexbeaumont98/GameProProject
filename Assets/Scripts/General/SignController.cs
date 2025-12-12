@@ -60,7 +60,7 @@ public class SignController : MonoBehaviour
         {
             active = true;
             uiObject.gameObject.SetActive(true);
-            UpdateUIPosition();
+            //UpdateUIPosition();
         }
     }
 
@@ -69,7 +69,7 @@ public class SignController : MonoBehaviour
         if (collision.CompareTag(playerTag))
         {
             active = false;
-            uiObject.gameObject.SetActive(false);
+            if (uiObject) uiObject.gameObject.SetActive(false);
         }
     }
 
@@ -78,7 +78,7 @@ public class SignController : MonoBehaviour
         // Keep UI pinned to world point while active
         if (uiObject.gameObject.activeSelf)
         {
-            UpdateUIPosition();
+            //UpdateUIPosition();
         }
     }
 

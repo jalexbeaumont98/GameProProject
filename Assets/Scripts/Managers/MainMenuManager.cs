@@ -19,4 +19,15 @@ public class MainMenuManager : MonoBehaviour
         UnityEditor.EditorApplication.isPlaying = false;
 #endif
     }
+
+    public void RestartLevel()
+    {
+        SceneManager.LoadScene(GameState.Instance.currentLevel);
+    }
+
+    public void GoToMainMenu()
+    {
+        
+        SceneManager.LoadScene("MainMenu");
+    }
 }

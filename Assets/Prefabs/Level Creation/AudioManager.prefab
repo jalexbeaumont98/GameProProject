@@ -46,11 +46,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sounds:
-  - {fileID: 11400000, guid: 1914be50971f8724a9470256f625ca56, type: 2}
+  - {fileID: 11400000, guid: ee6bf47a83c947e43b1bd671d00531ca, type: 2}
   - {fileID: 11400000, guid: fdcdbd63991bc6245ad4196b27b193f6, type: 2}
   - {fileID: 11400000, guid: 615a92bf0abf9904d89f555aa6be5045, type: 2}
   - {fileID: 11400000, guid: 69040b3af4065d94582ed179b8050b2a, type: 2}
   - {fileID: 11400000, guid: 23ece1b6ddae5df4cb79c02d31dc463b, type: 2}
+  - {fileID: 11400000, guid: f278da2cc7d41d046b14aae40c207cab, type: 2}
+  playMusicOnStartup: 0
   startupMusicId: music
   musicFadeInSeconds: 0
   musicSource: {fileID: 0}
