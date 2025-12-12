@@ -99,6 +99,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   powerupType: 0
+  shell: 0
 --- !u!61 &4565116477101254470
 BoxCollider2D:
   m_ObjectHideFlags: 0

@@ -18,35 +18,51 @@ public class HE_Explosion : Explosion
         decDestructibleMap = TileMapManager.DecDestructibleMap;
     }
 
-    public void ExplodeDestructableTiles()
+    void OnTriggerEnter2D(Collider2D collision)
     {
 
-        BoundsInt bounds = new BoundsInt(
+        
+        if (collision.transform.tag == "Stag")
+        {
+            print("collision with stag!!!!!!!");
+            StagProjectile stag = collision.transform.GetComponent<StagProjectile>();
+            stag.InitStag();
+        }
+    }
+
+    public void ExplodeDestructableTiles()
+    {
+        if (destructibleMap)
+        {
+            BoundsInt bounds = new BoundsInt(
         destructibleMap.WorldToCell(transform.position - Vector3.one * radius),
                 new Vector3Int(Mathf.CeilToInt(radius * 2), Mathf.CeilToInt(radius * 2), 1));
 
 
-        foreach (var pos in bounds.allPositionsWithin)
-        {
-
-            var tile = destructibleMap.GetTile(pos);
-            if (tile != null)
+            foreach (var pos in bounds.allPositionsWithin)
             {
-                Debug.Log($"Removing tile at {pos}");
-                destructibleMap.SetTile(pos, null);
-                DestroyDecorativeTileAbove(pos);
-            }
-            else
-            {
-                Debug.Log($"No tile at {pos}");
-            }
+
+                var tile = destructibleMap.GetTile(pos);
+                if (tile != null)
+                {
+                    Debug.Log($"Removing tile at {pos}");
+                    destructibleMap.SetTile(pos, null);
+                    DestroyDecorativeTileAbove(pos);
+                }
+                else
+                {
+                    Debug.Log($"No tile at {pos}");
+                }
 
 
+            }
         }
+
+
 
         //destructibleMap.RefreshAllTiles();
     }
-    
+
     private void DestroyDecorativeTileAbove(Vector3Int tilePos)
     {
         if (decDestructibleMap == null) return;
@@ -59,7 +75,7 @@ public class HE_Explosion : Explosion
         }
     }
 
-    
 
-   
+
+
 }

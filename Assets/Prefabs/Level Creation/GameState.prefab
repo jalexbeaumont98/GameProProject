@@ -61,6 +61,9 @@ MonoBehaviour:
     damage: 2
     unlocked: 0
     reloadTime: 1
+  powerups:
+  - name: Dash
+    unlocked: 0
   dashUnlocked: 1
   maxDashes: 2
 --- !u!114 &5879745955456740738

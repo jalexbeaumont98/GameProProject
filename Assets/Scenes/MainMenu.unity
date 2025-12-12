@@ -742,6 +742,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: GameState
       objectReference: {fileID: 0}
+    - target: {fileID: 6696586058209904437, guid: ad0e158f9ad8b004bac10d64590456d2, type: 3}
+      propertyPath: dashUnlocked
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8588967365024007957, guid: ad0e158f9ad8b004bac10d64590456d2, type: 3}
       propertyPath: m_LocalPosition.x
       value: -23.53055
@@ -1963,6 +1967,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1046940232444768316, guid: 8e521da681d7fc440a099be0ec40281e, type: 3}
+      propertyPath: playMusicOnStartup
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2431015760615498406, guid: 8e521da681d7fc440a099be0ec40281e, type: 3}
       propertyPath: m_Name
       value: AudioManager

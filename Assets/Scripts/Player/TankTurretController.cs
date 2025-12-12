@@ -77,6 +77,8 @@ public class TankTurretController : MonoBehaviour
         InitializeDashShell();
         InitializeShell();
 
+        GameState.Instance.SetShellsUnlockedOnSceneChange();
+
     }
 
     void Update()
@@ -222,9 +224,14 @@ public class TankTurretController : MonoBehaviour
 
     public void SetDashUnlocked()
     {
+
         dashUnlocked = true;
         InitializeDashShell();
+
+        print("dash should now be unlocked");
     }
+
+    
 
     public void SetProjectilesUnlocked(int unlockedShell = 0)
     {
@@ -236,11 +243,13 @@ public class TankTurretController : MonoBehaviour
     void InitializeDashShell()
     {
 
-        if (!dashUnlocked) return;
-
+        if (!dashUnlocked) {
+            print("not unlocked g");
+            return;
+        }
         currentDashShells = 0;
 
-        if (GameState.Instance.dashUnlocked)
+        if (GameState.Instance.Powerups[0].unlocked)
         {
             print("dash shell init");
             maxDashShells = GameState.Instance.maxDashes;

@@ -4,3 +4,6 @@
 *.sln
 /Temp
 /Builds
+*.csproj
+*.csproj
+Assembly-CSharp.csproj

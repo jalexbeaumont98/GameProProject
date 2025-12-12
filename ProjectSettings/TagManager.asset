@@ -8,6 +8,7 @@ TagManager:
   - Enemy
   - Destructible
   - Dec_Destructible
+  - Stag
   layers:
   - Default
   - TransparentFX
@@ -21,8 +22,8 @@ TagManager:
   - PlayerProjectiles
   - EnemyProjectiles
   - Explosions
-  - 
-  - 
+  - Platforms
+  - Stag
   - 
   - 
   - 

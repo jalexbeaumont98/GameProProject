@@ -13,9 +13,11 @@ public abstract class Projectile : DamageDealingController
     [SerializeField] protected int maxBounces = 1;
     [SerializeField] protected int maxPiercing = 0;
     [SerializeField] protected GameObject explosion;
-    [SerializeField] private LayerMask bounceLayers;
+    [SerializeField] protected LayerMask bounceLayers;
 
-    private Rigidbody2D rb;
+    [SerializeField] private LayerMask explodeLayers;
+
+    protected Rigidbody2D rb;
 
     protected int bounces = 0;
     protected int pierces = 0;
@@ -49,6 +51,9 @@ public abstract class Projectile : DamageDealingController
 
     protected virtual void OnCollisionEnter2D(Collision2D collision)
     {
+
+        if (((1 << collision.gameObject.layer) & explodeLayers) != 0)
+            DestroyProjectile();
         
         if (((1 << collision.gameObject.layer) & bounceLayers) != 0)
         {

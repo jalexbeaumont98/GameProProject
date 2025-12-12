@@ -513,6 +513,10 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: ab700017-a69f-4f9c-863b-5234669bf379
     m_ActionName: Global/Pause[/Keyboard/escape]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 5f797df5-8c85-4fde-a182-f1b989f42135
+    m_ActionName: Global/Interact[/Keyboard/e]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
@@ -539,14 +543,17 @@ MonoBehaviour:
   jumpForce: 12
   dashForce: 9
   coyoteTime: 0.1
+  isSprinting: 0
+  sprintSpeed: 5
   groundLayer:
     serializedVersion: 2
-    m_Bits: 64
+    m_Bits: 4160
   groundChecker: {fileID: 8267514896393966876}
   groundCheckSize: {x: 0.51, y: 0.16}
   baseGravity: 2
   fallSpeedMultiplier: 1.44
   maxFallSpeed: 13
+  hover: 0
   turretController: {fileID: 4709583705382762499}
   chassisController: {fileID: 1625081304938150024}
   tracksController: {fileID: 8780655831289082058}
